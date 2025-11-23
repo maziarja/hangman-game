@@ -4,16 +4,17 @@ import MenuButton from "./MenuButton";
 function Header({
   children,
   className,
+  type,
 }: {
   children: React.ReactNode;
-
+  type?: "difficulty";
   className?: string;
 }) {
   return (
     <div
       className={`flex items-center justify-between md:justify-start ${className}`}
     >
-      <NavLink to={"/"}>
+      <NavLink to={type === "difficulty" ? "/category-pick" : "/"}>
         <MenuButton type={"back"} />
       </NavLink>
       <p

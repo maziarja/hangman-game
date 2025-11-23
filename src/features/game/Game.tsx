@@ -15,7 +15,27 @@ import ResultModal from "./ResultModal";
 
 function Game() {
   const [searchParams] = useSearchParams();
-  const category = searchParams.get("category") || "";
+  const categoryParam = searchParams.get("category");
+
+  const category =
+    categoryParam === "movies" ||
+    categoryParam === "tv_shows" ||
+    categoryParam === "countries" ||
+    categoryParam === "capital_cities" ||
+    categoryParam === "animals" ||
+    categoryParam === "sports"
+      ? categoryParam
+      : "movies";
+
+  const difficultyParam = searchParams.get("difficulty");
+
+  const difficulty =
+    difficultyParam === "easy" ||
+    difficultyParam === "medium" ||
+    difficultyParam === "hard"
+      ? difficultyParam
+      : "easy";
+
   const categories = data.categories;
   const words = getWords(categories, category);
   const totalHealth = 8;
@@ -32,7 +52,7 @@ function Game() {
   const { setKeyInputState } = useKeyInput();
   const [letters, setLetters] = useState(() => {
     if (randomWordState) {
-      const letter = invisibleRandomLetters(randomWordState);
+      const letter = invisibleRandomLetters(randomWordState, difficulty);
       if (letter) return letter;
     }
   });
@@ -53,7 +73,7 @@ function Game() {
   function handleNextWord() {
     if (words) {
       const randomWord = getRandomWord(words);
-      const letters = invisibleRandomLetters(randomWord);
+      const letters = invisibleRandomLetters(randomWord, difficulty);
       setRandomWordState(randomWord);
       setLetters(letters);
       // CLOSE MODALS

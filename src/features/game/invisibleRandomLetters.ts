@@ -1,9 +1,16 @@
 import type { Word } from "../../../type";
 import { pushUniqueIndexOFInvisibleLetter } from "./pushUniqueIndexOFInvisibleLetter";
 
-export function invisibleRandomLetters(randomWord: Word) {
+export function invisibleRandomLetters(
+  randomWord: Word,
+  difficulty: "easy" | "medium" | "hard",
+) {
+  const difficultyPercent =
+    difficulty === "easy" ? 25 : difficulty === "medium" ? 40 : 100;
   const randomName = randomWord.name;
-  const numOfInvisibleLetter = Math.ceil((randomName.length * 40) / 100);
+  const numOfInvisibleLetter = Math.ceil(
+    (randomName.length * difficultyPercent) / 100,
+  );
   const arrLetters = randomName.split("").map((letter) => {
     return { letter, show: true };
   });
